@@ -59,13 +59,14 @@ class Schedule extends Component {
 
     onChangeBusdes1 = (routTimeID,event) =>{
         console.log(routTimeID);
+        console.log(event.target.value);
         let array = [];
         for(let t of this.state.timeList1){
             let check = t.id===routTimeID?true:false;
             if(check){
                 array.push({...t,buttonDisable:false});
             }else{
-                array.push({...t});
+                array.push({...t,buttonDisable:true});
             }
            
         }
@@ -76,7 +77,22 @@ class Schedule extends Component {
 
     onChangeBusdes2 = (routTimeID,event) =>{
         console.log(routTimeID);
-        console.log(event.target.value);
+        let array = [];
+        for(let t of this.state.timeList2){
+            let check = t.id===routTimeID?true:false;
+            if(check){
+                array.push({...t,buttonDisable:false});
+            }else{
+                array.push({...t,buttonDisable:true});
+            }
+           
+        }
+        this.setState({
+            timeList2:array
+        });
+    }
+    onUpdateButtonClick=()=>{
+        
     }
 
     onGetSheduleButtomClick = () => {
@@ -166,12 +182,14 @@ class Schedule extends Component {
             .then((response) => {
                 axios.get(`shedule.json`)
                     .then((response2) => {
+                        
                         this.setState({
                             timeList: this.convertObjectToArray(response.data),
-                            sheduleList:this.convertObjectToArray(response2.data),
+                            sheduleList:this.sheduleFilterByDate(this.state.selectedDate, this.convertObjectToArray(response2.data)),
                             loading: false
                         });
-                        console.log(response2.data);
+                        //console.log(response2.data);
+                        this.combineSheduleAndTimeTable();
                         this.divideTimeTableInToTwoDestination(this.state.timeList);
                     })
                     .catch(() => {
@@ -201,7 +219,29 @@ class Schedule extends Component {
             timeList2: timeList2,
         });
     }
+    combineSheduleAndTimeTable=()=>{
+        let allTimeAndSheduleArray = [];
 
+        for(let timeL of this.state.timeList){
+            allTimeAndSheduleArray.push({...timeL,shedule:this.findRelatedObjectByRoutTimeID(timeL.id,this.state.sheduleList)})
+        }
+        //console.log(allTimeAndSheduleArray);
+        this.setState({
+            timeList:allTimeAndSheduleArray
+        })
+    }
+
+
+    findRelatedObjectByRoutTimeID =(routeTimeID,sheduleList) =>{
+        let object = sheduleList.find((shedule)=>shedule.routeTimeID===routeTimeID);
+        //console.log(object);
+        if(typeof(object) == 'undefined'){
+            return {busID: "No Bus Assigned",dateOfMonth: null,id: null,routeTimeID: null};
+        }else{
+            return object;
+        }
+        
+    }
 
 
     findRelatedObject = (id, array) => {
@@ -216,6 +256,12 @@ class Schedule extends Component {
                 return false;
             }
         });
+        return newArray;
+    }
+
+    sheduleFilterByDate = (selectedDate,sheduleArray) =>{
+        let newArray = sheduleArray.filter((shedule)=>parseInt(shedule.dateOfMonth,10) ===parseInt(selectedDate,10));
+        //console.log(newArray);
         return newArray;
     }
 
@@ -240,7 +286,7 @@ class Schedule extends Component {
         for (let ob of this.state.busList) {
             newArray.push({ ...ob, routeID: this.findRelatedObject(ob.routeID, this.state.routerListWithAllAttrib) });
         }
-        console.log(newArray);
+        //console.log(newArray);
         return newArray;
     }
 

@@ -13,21 +13,21 @@ const SingleDateSheduleChart = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.timeList.map((time)=>{
+                    {props.timeList.map((time) => {
                         return (<tr key={time.id}>
                             <td>{time.departureTime}</td>
                             <td>
-                                <select className="form-control" onChange={(e)=>props.onChangeBus(time.id,e)}>
-                                <option key={0}>No Bus Assigned</option>
-                                    {props.busList.map((bus)=>{
+                                <select className="form-control" onChange={(e) => props.onChangeBus(time.id, e)}>
+                                    <option key={0}>{time.shedule.busID}</option>
+                                    {props.busList.map((bus) => {
                                         return (
-                                        <option key={bus.id}>{bus.id}</option>
+                                            <option key={bus.id}>{bus.id}</option>
                                         );
                                     })}
-                                    
+
                                 </select>
-                                </td>
-                                <td><button className="btn btn-primary" disabled={time.buttonDisable}>Update</button></td>
+                            </td>
+                            <td><button className="btn btn-primary" disabled={time.buttonDisable}>Update</button></td>
                         </tr>);
                     })}
                 </tbody>
