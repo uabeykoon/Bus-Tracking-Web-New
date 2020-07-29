@@ -18,10 +18,10 @@ const SingleDateSheduleChart = (props) => {
                             <td>{time.departureTime}</td>
                             <td>
                                 <select className="form-control" onChange={(e) => props.onChangeBus(time.id, e)}>
-                                    <option key={0} value={time.shedule.busID}>{time.shedule.busID}</option>
+                                    <option key={0} value={time.shedule.busID}>{findRelatedBusName(time.shedule.busID,props.busList)}</option>
                                     {props.busList.map((bus) => {
                                         return (
-                                            <option key={bus.id} value={bus.id}>{bus.id}</option>
+                                        <option key={bus.id} value={bus.id}>{bus.name} - {bus.numberPlate}</option>
                                         );
                                     })}
 
@@ -34,6 +34,19 @@ const SingleDateSheduleChart = (props) => {
             </table>
         </>
     );
+}
+
+const findRelatedBusName = (id, array) => {
+    //return array.find((el) => el.id === id).id;
+    let s = array.find((a)=>a.id===id);
+    if(typeof(s)==="undefined"){
+        return "No Bus Assigned"
+    }else{
+        return `${s.name} - ${s.numberPlate}`;
+    }
+    console.log(id);
+    console.log(s);
+    return "id + "  + "rray";
 }
 
 export default SingleDateSheduleChart;

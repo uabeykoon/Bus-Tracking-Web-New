@@ -102,23 +102,61 @@ class Schedule extends Component {
     onUpdateButtonClick1=()=>{
 
         if(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID==="No Bus Assigned"){
-            //console.log(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID)
-            console.log("no existing bus allocated")
+            let object ={
+                routeTimeID:this.state.selectedRouteTimeID1,
+                dateOfMonth:this.state.selectedDate,
+                busID:this.state.selectedBus1
+            };
+            axios.post("shedule.json",object)
+            .then((shedule)=>{
+                console.log("successfully done");
+            }).catch((err)=>{
+                console.log(err);
+            })
+            //console.log("no existing bus allocated")
         }else{
-            console.log("all ready allocated");
+            let object ={
+                routeTimeID:this.state.selectedRouteTimeID1,
+                dateOfMonth:this.state.selectedDate,
+                busID:this.state.selectedBus1
+            };
+            let sheduleID = this.state.sheduleList.find((shedule)=>shedule.routeTimeID===this.state.selectedRouteTimeID1 && parseInt(shedule.dateOfMonth) ===parseInt(this.state.selectedDate) ).id;
+            axios.patch(`shedule/${sheduleID}/.json`,object)
+            .then(()=>{
+                console.log("successfully updated");
+            }).catch((err)=>{
+                console.log(err);
+            });
         }
 
-        // console.log(this.state.selectedRouteTimeID1)
-        // console.log(this.state.selectedBus1);
-        // console.log(this.state.selectedDate);
     }
 
     onUpdateButtonClick2=()=>{
         if(this.state.timeList2.find(time=>time.id===this.state.selectedRouteTimeID2).shedule.busID==="No Bus Assigned"){
-            //console.log(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID)
-            console.log("no existing bus allocated")
+            let object ={
+                routeTimeID:this.state.selectedRouteTimeID2,
+                dateOfMonth:this.state.selectedDate,
+                busID:this.state.selectedBus2
+            };
+            axios.post("shedule.json",object)
+            .then((shedule)=>{
+                console.log("successfully done");
+            }).catch((err)=>{
+                console.log(err);
+            })
         }else{
-            console.log("all ready allocated");
+            let object ={
+                routeTimeID:this.state.selectedRouteTimeID2,
+                dateOfMonth:this.state.selectedDate,
+                busID:this.state.selectedBus2
+            };
+            let sheduleID = this.state.sheduleList.find((shedule)=>shedule.routeTimeID===this.state.selectedRouteTimeID2 && parseInt(shedule.dateOfMonth) ===parseInt(this.state.selectedDate) ).id;
+            axios.patch(`shedule/${sheduleID}/.json`,object)
+            .then(()=>{
+                console.log("successfully updated");
+            }).catch((err)=>{
+                console.log(err);
+            });
         }
     }
 
@@ -276,6 +314,10 @@ class Schedule extends Component {
         return array.find((el) => el.id === id);
     }
 
+    findRelatedBusName = (id, array) => {
+        return array.find((el) => el.id === id).id;
+    }
+
     findRelatedObjectWithVariable = (array) => {
         let newArray = array.filter((shedule) => {
             if (shedule.routeID === this.state.selectedRoute && shedule.dateOfMonth === this.state.selectedDate) {
@@ -408,10 +450,10 @@ class Schedule extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-6">
-                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination1} timeList={this.state.timeList1} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes1} onClickUpdate={this.onUpdateButtonClick1}/>
+                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination1} timeList={this.state.timeList1} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes1} onClickUpdate={this.onUpdateButtonClick1} findBus={this.findRelatedBusName}/>
                     </div>
                     <div className="col-md-6">
-                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination2} timeList={this.state.timeList2} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes2} onClickUpdate={this.onUpdateButtonClick2}/>
+                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination2} timeList={this.state.timeList2} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes2} onClickUpdate={this.onUpdateButtonClick2} findBus={this.findRelatedBusName}/>
 
                     </div>
 
