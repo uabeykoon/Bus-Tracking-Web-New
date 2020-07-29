@@ -18,16 +18,16 @@ const SingleDateSheduleChart = (props) => {
                             <td>{time.departureTime}</td>
                             <td>
                                 <select className="form-control" onChange={(e) => props.onChangeBus(time.id, e)}>
-                                    <option key={0}>{time.shedule.busID}</option>
+                                    <option key={0} value={time.shedule.busID}>{time.shedule.busID}</option>
                                     {props.busList.map((bus) => {
                                         return (
-                                            <option key={bus.id}>{bus.id}</option>
+                                            <option key={bus.id} value={bus.id}>{bus.id}</option>
                                         );
                                     })}
 
                                 </select>
                             </td>
-                            <td><button className="btn btn-primary" disabled={time.buttonDisable}>Update</button></td>
+                            <td><button className="btn btn-primary" disabled={time.buttonDisable} onClick={props.onClickUpdate}>Update</button></td>
                         </tr>);
                     })}
                 </tbody>

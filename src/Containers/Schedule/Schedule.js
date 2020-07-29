@@ -19,6 +19,10 @@ class Schedule extends Component {
         selectedRouteDestination2: "Destination 2",
         selectedRoute: null,
         selectedDate: null,
+        selectedRouteTimeID1:null,
+        selectedRouteTimeID2:null,
+        selectedBus1:null,
+        selectedBus2:null,
         timeList: [],
         timeList1: [],
         timeList2: [],
@@ -58,8 +62,8 @@ class Schedule extends Component {
     }
 
     onChangeBusdes1 = (routTimeID,event) =>{
-        console.log(routTimeID);
-        console.log(event.target.value);
+        // console.log(routTimeID);
+        // console.log(event.target.value);
         let array = [];
         for(let t of this.state.timeList1){
             let check = t.id===routTimeID?true:false;
@@ -71,12 +75,14 @@ class Schedule extends Component {
            
         }
         this.setState({
-            timeList1:array
+            timeList1:array,
+            selectedRouteTimeID1:routTimeID,
+            selectedBus1:event.target.value
         });
     }
 
     onChangeBusdes2 = (routTimeID,event) =>{
-        console.log(routTimeID);
+        //console.log(routTimeID);
         let array = [];
         for(let t of this.state.timeList2){
             let check = t.id===routTimeID?true:false;
@@ -88,11 +94,32 @@ class Schedule extends Component {
            
         }
         this.setState({
-            timeList2:array
+            timeList2:array,
+            selectedRouteTimeID2:routTimeID,
+            selectedBus2:event.target.value
         });
     }
-    onUpdateButtonClick=()=>{
-        
+    onUpdateButtonClick1=()=>{
+
+        if(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID==="No Bus Assigned"){
+            //console.log(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID)
+            console.log("no existing bus allocated")
+        }else{
+            console.log("all ready allocated");
+        }
+
+        // console.log(this.state.selectedRouteTimeID1)
+        // console.log(this.state.selectedBus1);
+        // console.log(this.state.selectedDate);
+    }
+
+    onUpdateButtonClick2=()=>{
+        if(this.state.timeList2.find(time=>time.id===this.state.selectedRouteTimeID2).shedule.busID==="No Bus Assigned"){
+            //console.log(this.state.timeList1.find(time=>time.id===this.state.selectedRouteTimeID1).shedule.busID)
+            console.log("no existing bus allocated")
+        }else{
+            console.log("all ready allocated");
+        }
     }
 
     onGetSheduleButtomClick = () => {
@@ -101,6 +128,7 @@ class Schedule extends Component {
             selectedRouteDestination1: routeDetails.destination1.stationName,
             selectedRouteDestination2: routeDetails.destination2.stationName,
         });
+        this.filterBusRelatedToRoute(this.state.busListWithAllAttribb);
         this.fetchTimeTableDatafromDataBase(this.state.selectedRoute,this.state.selectedDate);
     }
 
@@ -153,7 +181,7 @@ class Schedule extends Component {
                                 });
 
                                 this.setState({
-                                    busList: this.convertObjectToArray(respons3.data)
+                                    busList:this.convertObjectToArray(respons3.data) 
                                 });
 
                                 this.setState({
@@ -295,6 +323,17 @@ class Schedule extends Component {
         return this.state.stationList.find((el) => el.id === id);
     }
 
+    filterBusRelatedToRoute =(busList) =>{
+        console.log(busList);
+        //console.log(busList.filter(bus=>bus.routeID.id===this.state.selectedRoute));
+        // console.log(busList.filter((bus)=>bus.routeID===this.state.selectedRoute));
+        // return busList.filter((bus)=>bus.routeID===this.state.selectedRoute);
+        this.setState({
+            busListWithAllAttribb:busList.filter(bus=>bus.routeID.id===this.state.selectedRoute)
+        });
+
+    }
+
 
 
     combineTimeTableAndDate = () => {
@@ -369,10 +408,10 @@ class Schedule extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-6">
-                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination1} timeList={this.state.timeList1} busList={this.state.busList} onChangeBus={this.onChangeBusdes1}/>
+                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination1} timeList={this.state.timeList1} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes1} onClickUpdate={this.onUpdateButtonClick1}/>
                     </div>
                     <div className="col-md-6">
-                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination2} timeList={this.state.timeList2} busList={this.state.busList} onChangeBus={this.onChangeBusdes2}/>
+                        <SingleDateSheduleChart destination={this.state.selectedRouteDestination2} timeList={this.state.timeList2} busList={this.state.busListWithAllAttribb} onChangeBus={this.onChangeBusdes2} onClickUpdate={this.onUpdateButtonClick2}/>
 
                     </div>
 
