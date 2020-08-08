@@ -367,7 +367,7 @@ class Schedule extends Component {
 
     filterBusRelatedToRoute =(busList) =>{
         console.log(busList);
-        //console.log(busList.filter(bus=>bus.routeID.id===this.state.selectedRoute));
+        console.log(busList.filter(bus=>bus.routeID.id===this.state.selectedRoute));
         // console.log(busList.filter((bus)=>bus.routeID===this.state.selectedRoute));
         // return busList.filter((bus)=>bus.routeID===this.state.selectedRoute);
         this.setState({
