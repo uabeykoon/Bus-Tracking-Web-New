@@ -13,12 +13,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <div className='container-fuid'>
-          <div className="row">
-            <div className="col-md-3">
+        <div className=''>
+          <div className="">
+            {/* <div className="col-md-3">
               <Navbar />
-            </div>
-            <div className="col-md-9">
+            </div> */}
+            <div className="">
               <Switch>
                 <Route path="/schedule" component={Schedule} />
                 <Route path="/bus" component={Bus} />
