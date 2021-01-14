@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class BusNav extends Component {
     render() {
         return (
-            <div>
+            <div style={{marginLeft:"300px"}}>
                 <nav className="nav nav-pills nav-fill">
                     <NavLink to="/bus" exact className="nav-item nav-link">Bus List</NavLink>
                     <NavLink to="/bus/addbus" className="nav-item nav-link">Add Bus</NavLink>

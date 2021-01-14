@@ -5,7 +5,7 @@ class RouteNav extends Component {
     render() {
         return (
             <div>
-                <nav className="nav nav-pills nav-fill">
+                <nav className="nav nav-pills nav-fill" style={{marginLeft:"300px"}}>
                     
                     <NavLink to="/route" exact className="nav-item nav-link">Route List</NavLink>
                     <NavLink to="/route/timetable" className="nav-item nav-link">Time Table</NavLink>

@@ -96,6 +96,40 @@ class BusOwners extends Component {
 
         return (
             <div>
+                <div className="wrapper">
+        <nav id="sidebar">
+            <div className="sidebar-header">
+                <div className="row">
+                    <div className="col-md-10">
+                    <h3>Bus Tracker</h3>
+                <small>largest tracking system</small>
+                    </div>
+                    <div className="col-md-2">
+                    <button type="button" id="sidebarCollapse" className="btn btn-info">
+                    <i className="fa fa-arrow-left" aria-hidden="true"></i>
+                    </button>
+                    </div>
+                </div>
+                
+            </div>
+
+            <ul className="list-unstyled components">
+                <li>
+                    <a href="/">DashBoard</a>
+                </li>
+                <li>
+                    <a href="/bus">Bus</a>
+                </li>
+                <li>
+                    <a href="/route">Route</a>
+                </li>
+                <li>
+                    <a href="/schedule">Schedule</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            <div>
                 <div className="container">
                 {errMessage}
                 <button type="button" className="btn btn-success" onClick={this.onClickAddNewOwner}>Success</button>
@@ -156,6 +190,9 @@ class BusOwners extends Component {
                         <button className="btn btn-danger" type="submit">CANCEL</button>
                     </form>
                 </div>
+            </div>
+            </div>
+            </div>
             </div>
 
         );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import bus from '../../images/bus.png';
+import reg from '../../images/reg.png';
+import rout from '../../images/rot.png';
 
 class DashBoard extends Component{
     render(){
@@ -67,8 +69,7 @@ class DashBoard extends Component{
 
             {/* Dashboard widgets */}
             <div className="row">
-                <div className="col-md-12">
-                    <div className="card col-md-3">
+                    <div className="card col-md-3" style={{margin:"5px"}}>
                         <img className="card-img-top" src={bus} alt="Card image cap"/>
                         <div className="card-body">
                             <h5 className="card-title">Registed Bus Count : 6</h5>
@@ -76,7 +77,22 @@ class DashBoard extends Component{
                             <a href="/bus" className="btn btn-primary">Go For Bus</a>
                         </div>
                     </div>
-                </div>
+                    <div className="card col-md-3" style={{margin:"5px"}}>
+                        <img className="card-img-top" src={reg} alt="Card image cap"/>
+                        <div className="card-body">
+                            <h5 className="card-title">Registed Bus Owners : 6</h5>
+                            <p className="card-text">Large number of Bus Owners are registed in our system.</p>
+                            <a href="/bus/busowners" className="btn btn-primary">Register as Bus owner</a>
+                        </div>
+                    </div>
+                    <div className="card col-md-3" style={{margin:"5px"}}>
+                        <img className="card-img-top" src={rout} alt="Card image cap"/>
+                        <div className="card-body">
+                            <h5 className="card-title">No of Routes : 10</h5>
+                            <p className="card-text">Large number of routes are registed in our system.</p>
+                            <a href="/route/addroute" className="btn btn-primary">Go For Routes</a>
+                        </div>
+                    </div>
             </div>
 
 

@@ -116,6 +116,40 @@ class AddRoute extends Component {
         const spinner = this.state.loading ? (<><div className="lds-ring"><div /></div><div></div><div></div></>) : null;
         return (
             <div>
+                <div className="wrapper">
+        <nav id="sidebar">
+            <div className="sidebar-header">
+                <div className="row">
+                    <div className="col-md-10">
+                    <h3>Bus Tracker</h3>
+                <small>largest tracking system</small>
+                    </div>
+                    <div className="col-md-2">
+                    <button type="button" id="sidebarCollapse" className="btn btn-info">
+                    <i className="fa fa-arrow-left" aria-hidden="true"></i>
+                    </button>
+                    </div>
+                </div>
+                
+            </div>
+
+            <ul className="list-unstyled components">
+                <li>
+                    <a href="/">DashBoard</a>
+                </li>
+                <li>
+                    <a href="/bus">Bus</a>
+                </li>
+                <li>
+                    <a href="/route">Route</a>
+                </li>
+                <li>
+                    <a href="/schedule">Schedule</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            <div>
                 {errMessage}
                 <form onSubmit={this.onSubmit}>
                     <legend>---ADD ROUTE---</legend>
@@ -175,6 +209,9 @@ class AddRoute extends Component {
                     {error}
                 </form>
 
+            </div>
+            </div>
+            </div>
             </div>
         );
     }
